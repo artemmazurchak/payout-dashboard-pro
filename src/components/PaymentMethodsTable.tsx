@@ -94,7 +94,7 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
         </button>
       </td>
       <td className="py-4 px-4 text-center text-muted-foreground">{index + 1}</td>
-      <td className="py-4 px-6">{method.name}</td>
+      <td className="py-4 px-6 text-sm">{method.name}</td>
       <td className="py-4 px-6 text-center">
         <div className="flex justify-center">
           <Switch
@@ -142,9 +142,9 @@ const PaymentMethodsTable = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Payment Service Provider</h1>
-        <div className="w-[320px]">
+        <div className="w-[600px]">
           <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-            <SelectTrigger className="h-14 border-2 border-primary rounded-xl bg-background font-medium text-base">
+            <SelectTrigger className="h-16 border border-border rounded-lg bg-background text-base">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
@@ -168,9 +168,9 @@ const PaymentMethodsTable = () => {
             <thead>
               <tr className="border-b border-border bg-secondary/30">
                 <th className="py-3 px-4 w-12"></th>
-                <th className="py-3 px-4 text-left font-medium text-sm"></th>
-                <th className="py-3 px-6 text-left font-medium text-sm">Payment Provider</th>
-                <th className="py-3 px-6 text-center font-medium text-sm">Enable</th>
+                <th className="py-3 px-4 text-left font-medium text-base"></th>
+                <th className="py-3 px-6 text-left font-medium text-base">Payment Provider</th>
+                <th className="py-3 px-6 text-center font-medium text-base">Enable</th>
               </tr>
             </thead>
             <tbody>
