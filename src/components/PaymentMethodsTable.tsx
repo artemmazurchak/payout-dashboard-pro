@@ -17,7 +17,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -97,7 +97,7 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
       <td className="py-4 px-6">{method.name}</td>
       <td className="py-4 px-6 text-center">
         <div className="flex justify-center">
-          <Checkbox
+          <Switch
             checked={method.active}
             onCheckedChange={() => onToggle(method.id)}
           />
@@ -141,19 +141,21 @@ const PaymentMethodsTable = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Order Settings</h1>
-        <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-          <SelectTrigger className="w-[200px]">
-            <SelectValue placeholder="Select country" />
-          </SelectTrigger>
-          <SelectContent>
-            {countries.map((country) => (
-              <SelectItem key={country} value={country}>
-                {country}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <h1 className="text-3xl font-bold">Payment Service Provider</h1>
+        <div className="w-[300px]">
+          <Select value={selectedCountry} onValueChange={setSelectedCountry}>
+            <SelectTrigger className="h-12 border-2 border-primary rounded-lg bg-background">
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent>
+              {countries.map((country) => (
+                <SelectItem key={country} value={country}>
+                  {country}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="bg-card rounded-lg border border-border overflow-hidden">
@@ -166,9 +168,9 @@ const PaymentMethodsTable = () => {
             <thead>
               <tr className="border-b border-border bg-secondary/30">
                 <th className="py-3 px-4 w-12"></th>
-                <th className="py-3 px-4 text-left font-medium text-sm">ID</th>
-                <th className="py-3 px-6 text-left font-medium text-sm">Name</th>
-                <th className="py-3 px-6 text-center font-medium text-sm">Active</th>
+                <th className="py-3 px-4 text-left font-medium text-sm">#</th>
+                <th className="py-3 px-6 text-left font-medium text-sm">Payment Provider</th>
+                <th className="py-3 px-6 text-center font-medium text-sm">Enable</th>
               </tr>
             </thead>
             <tbody>
@@ -188,29 +190,6 @@ const PaymentMethodsTable = () => {
             </tbody>
           </table>
         </DndContext>
-
-        <div className="flex items-center justify-end gap-4 px-6 py-4 border-t border-border text-sm text-muted-foreground">
-          <span>Rows per page:</span>
-          <Select defaultValue="10">
-            <SelectTrigger className="w-[70px] h-8">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-            </SelectContent>
-          </Select>
-          <span>1–{paymentMethods.length} of {paymentMethods.length}</span>
-          <div className="flex gap-1">
-            <button className="p-1 hover:bg-secondary rounded disabled:opacity-50" disabled>
-              &lt;
-            </button>
-            <button className="p-1 hover:bg-secondary rounded disabled:opacity-50" disabled>
-              &gt;
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
