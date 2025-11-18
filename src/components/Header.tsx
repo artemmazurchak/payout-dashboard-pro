@@ -12,9 +12,7 @@ const Header = () => {
         <span>/</span>
         <span>Config</span>
         <span>/</span>
-        <span>Challenges</span>
-        <span>/</span>
-        <span className="text-foreground font-medium">Orders</span>
+        <span className="text-foreground font-medium">PSP</span>
       </nav>
     </header>
   );
