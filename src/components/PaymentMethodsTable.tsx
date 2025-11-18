@@ -93,7 +93,7 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
           <GripVertical size={20} />
         </button>
       </td>
-      <td className="py-2.5 px-4 text-center text-muted-foreground">{index + 1}</td>
+      <td className="py-2.5 px-2 text-center text-muted-foreground w-16">{index + 1}</td>
       <td className="py-2.5 px-6 text-sm">{method.name}</td>
       <td className="py-2.5 px-6 text-center">
         <div className="flex justify-center">
@@ -168,7 +168,7 @@ const PaymentMethodsTable = () => {
             <thead>
               <tr className="border-b border-border bg-secondary/30">
                 <th className="py-3 px-4 w-12"></th>
-                <th className="py-3 px-4 text-left font-medium text-base"></th>
+                <th className="py-3 px-2 text-left font-medium text-base w-16"></th>
                 <th className="py-3 px-6 text-left font-medium text-base">Payment Provider</th>
                 <th className="py-3 px-6 text-center font-medium text-base">Enable</th>
               </tr>
