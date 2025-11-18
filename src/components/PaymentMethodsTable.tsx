@@ -84,7 +84,7 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
       style={style}
       className="border-b border-border hover:bg-secondary/50 transition-colors"
     >
-      <td className="py-4 px-4 w-12">
+      <td className="py-2.5 px-4 w-12">
         <button
           className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground"
           {...attributes}
@@ -93,9 +93,9 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
           <GripVertical size={20} />
         </button>
       </td>
-      <td className="py-4 px-4 text-center text-muted-foreground">{index + 1}</td>
-      <td className="py-4 px-6 text-sm">{method.name}</td>
-      <td className="py-4 px-6 text-center">
+      <td className="py-2.5 px-4 text-center text-muted-foreground">{index + 1}</td>
+      <td className="py-2.5 px-6 text-sm">{method.name}</td>
+      <td className="py-2.5 px-6 text-center">
         <div className="flex justify-center">
           <Switch
             checked={method.active}
@@ -142,7 +142,7 @@ const PaymentMethodsTable = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Payment Service Provider</h1>
-        <div className="w-[600px]">
+        <div className="w-[200px]">
           <Select value={selectedCountry} onValueChange={setSelectedCountry}>
             <SelectTrigger className="h-16 border border-border rounded-lg bg-background text-base">
               <SelectValue placeholder="Select country" />
