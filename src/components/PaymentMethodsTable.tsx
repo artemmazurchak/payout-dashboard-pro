@@ -142,9 +142,9 @@ const PaymentMethodsTable = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Payment Service Provider</h1>
-        <div className="w-[300px]">
+        <div className="w-[320px]">
           <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-            <SelectTrigger className="h-12 border-2 border-primary rounded-lg bg-background">
+            <SelectTrigger className="h-14 border-2 border-primary rounded-xl bg-background font-medium text-base">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
@@ -168,7 +168,7 @@ const PaymentMethodsTable = () => {
             <thead>
               <tr className="border-b border-border bg-secondary/30">
                 <th className="py-3 px-4 w-12"></th>
-                <th className="py-3 px-4 text-left font-medium text-sm">#</th>
+                <th className="py-3 px-4 text-left font-medium text-sm"></th>
                 <th className="py-3 px-6 text-left font-medium text-sm">Payment Provider</th>
                 <th className="py-3 px-6 text-center font-medium text-sm">Enable</th>
               </tr>
@@ -190,6 +190,17 @@ const PaymentMethodsTable = () => {
             </tbody>
           </table>
         </DndContext>
+      </div>
+
+      <div className="flex justify-end mt-6">
+        <button className="bg-[hsl(214,89%,52%)] hover:bg-[hsl(214,89%,48%)] text-white font-semibold px-8 py-3 rounded-lg flex items-center gap-2 transition-colors">
+          <span>SAVE</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
+            <path d="M9 4V8H15V4" stroke="currentColor" strokeWidth="2"/>
+            <path d="M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   );
