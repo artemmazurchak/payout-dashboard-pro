@@ -93,8 +93,8 @@ function SortableRow({ method, index, onToggle }: SortableRowProps) {
           <GripVertical size={20} />
         </button>
       </td>
-      <td className="py-4 px-4 text-center text-muted-foreground">{index + 1}</td>
-      <td className="py-4 px-6">{method.name}</td>
+      <td className="py-4 px-4 text-center text-muted-foreground text-2xl">{index + 1}</td>
+      <td className="py-4 px-6 text-2xl">{method.name}</td>
       <td className="py-4 px-6 text-center">
         <div className="flex justify-center">
           <Switch
@@ -142,9 +142,9 @@ const PaymentMethodsTable = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Payment Service Provider</h1>
-        <div className="w-[320px]">
+        <div className="w-[400px]">
           <Select value={selectedCountry} onValueChange={setSelectedCountry}>
-            <SelectTrigger className="h-14 border-2 border-primary rounded-xl bg-background font-medium text-base">
+            <SelectTrigger className="h-[60px] border border-border rounded-xl bg-background font-normal text-lg px-5">
               <SelectValue placeholder="Select country" />
             </SelectTrigger>
             <SelectContent>
@@ -168,9 +168,9 @@ const PaymentMethodsTable = () => {
             <thead>
               <tr className="border-b border-border bg-secondary/30">
                 <th className="py-3 px-4 w-12"></th>
-                <th className="py-3 px-4 text-left font-medium text-sm"></th>
-                <th className="py-3 px-6 text-left font-medium text-sm">Payment Provider</th>
-                <th className="py-3 px-6 text-center font-medium text-sm">Enable</th>
+                <th className="py-3 px-4 text-left font-bold text-base"></th>
+                <th className="py-3 px-6 text-left font-bold text-base">Payment Provider</th>
+                <th className="py-3 px-6 text-center font-bold text-base">Enable</th>
               </tr>
             </thead>
             <tbody>
@@ -193,13 +193,15 @@ const PaymentMethodsTable = () => {
       </div>
 
       <div className="flex justify-end mt-6">
-        <button className="bg-[hsl(214,89%,52%)] hover:bg-[hsl(214,89%,48%)] text-white font-semibold px-8 py-3 rounded-lg flex items-center gap-2 transition-colors">
-          <span>SAVE</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" strokeWidth="2"/>
-            <path d="M9 4V8H15V4" stroke="currentColor" strokeWidth="2"/>
-            <path d="M8 12H16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
+        <button className="bg-[hsl(214,89%,52%)] hover:bg-[hsl(214,89%,48%)] text-white font-bold text-lg px-10 py-4 rounded-xl flex items-center gap-3 transition-colors shadow-lg">
+          <span className="tracking-wider">SAVE</span>
+          <div className="w-7 h-7 bg-white rounded flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="4" width="14" height="16" rx="1" stroke="hsl(214,89%,52%)" strokeWidth="2"/>
+              <path d="M9 4V7H15V4" stroke="hsl(214,89%,52%)" strokeWidth="2"/>
+              <circle cx="12" cy="14" r="2" fill="hsl(214,89%,52%)"/>
+            </svg>
+          </div>
         </button>
       </div>
     </div>
