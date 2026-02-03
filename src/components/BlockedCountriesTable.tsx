@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -7,26 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Save, Trash2, X, Check } from "lucide-react";
+import { Plus, Save } from "lucide-react";
 
-const products = {
-  CFDs: ["MT4", "MT5", "cTrader"],
-  Futures: ["dxfeed", "rithmic", "tradovate"],
-};
-
-const allProducts = [...products.CFDs, ...products.Futures];
-
-interface CountryRestriction {
+interface Country {
   id: string;
   name: string;
-  restrictions: Record<string, boolean>;
+  blocked: boolean;
 }
 
 const allCountries = [
-  "Afghanistan",
-  "Belarus",
-  "Bonaire",
-  "Canada",
   "Germany",
   "Spain",
   "Vietnam",
@@ -36,6 +26,7 @@ const allCountries = [
   "France",
   "Japan",
   "Italy",
+  "Canada",
   "Australia",
   "Brazil",
   "India",
@@ -48,51 +39,39 @@ const allCountries = [
   "Poland",
 ];
 
-const initialBlockedCountries: CountryRestriction[] = [
-  { id: "1", name: "Afghanistan", restrictions: { rithmic: true } },
-  { id: "2", name: "Belarus", restrictions: { dxfeed: true } },
-  { id: "3", name: "Bonaire", restrictions: { rithmic: true } },
-  { id: "4", name: "Canada", restrictions: { MT4: true, MT5: true, cTrader: true, dxfeed: false, rithmic: false, tradovate: false } },
+const initialBlockedCountries: Country[] = [
+  { id: "1", name: "Russia", blocked: true },
+  { id: "2", name: "China", blocked: true },
+  { id: "3", name: "Vietnam", blocked: false },
+  { id: "4", name: "India", blocked: true },
 ];
 
 const BlockedCountriesTable = () => {
-  const [blockedCountries, setBlockedCountries] = useState<CountryRestriction[]>(initialBlockedCountries);
+  const [blockedCountries, setBlockedCountries] = useState<Country[]>(initialBlockedCountries);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const availableCountries = allCountries.filter(
     (country) => !blockedCountries.some((bc) => bc.name === country)
   );
 
-  const handleToggleRestriction = (countryId: string, product: string) => {
+  const handleToggle = (id: string) => {
     setBlockedCountries((countries) =>
       countries.map((country) =>
-        country.id === countryId
-          ? {
-              ...country,
-              restrictions: {
-                ...country.restrictions,
-                [product]: !country.restrictions[product],
-              },
-            }
-          : country
+        country.id === id ? { ...country, blocked: !country.blocked } : country
       )
     );
   };
 
   const handleAddCountry = () => {
     if (selectedCountry) {
-      const newCountry: CountryRestriction = {
+      const newCountry: Country = {
         id: Date.now().toString(),
         name: selectedCountry,
-        restrictions: {},
+        blocked: true,
       };
       setBlockedCountries([...blockedCountries, newCountry]);
       setSelectedCountry("");
     }
-  };
-
-  const handleDeleteCountry = (id: string) => {
-    setBlockedCountries((countries) => countries.filter((c) => c.id !== id));
   };
 
   const handleSave = () => {
@@ -138,37 +117,9 @@ const BlockedCountriesTable = () => {
       <div className="bg-card rounded-lg border border-border overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-border bg-accent/10">
-              <th className="py-3 px-4 text-left font-medium text-base" rowSpan={2}>
-                Country
-              </th>
-              <th className="py-2 px-2 text-center font-medium text-base border-l border-border" colSpan={3}>
-                CFDs
-              </th>
-              <th className="py-2 px-2 text-center font-medium text-base border-l border-border" colSpan={3}>
-                Futures
-              </th>
-              <th className="py-3 px-4 text-center font-medium text-base border-l border-border" rowSpan={2}>
-                Actions
-              </th>
-            </tr>
-            <tr className="border-b border-border bg-accent/10">
-              {products.CFDs.map((product, idx) => (
-                <th
-                  key={product}
-                  className={`py-2 px-3 text-center font-medium text-sm ${idx === 0 ? "border-l border-border" : ""}`}
-                >
-                  {product}
-                </th>
-              ))}
-              {products.Futures.map((product, idx) => (
-                <th
-                  key={product}
-                  className={`py-2 px-3 text-center font-medium text-sm ${idx === 0 ? "border-l border-border" : ""}`}
-                >
-                  {product}
-                </th>
-              ))}
+            <tr className="border-b border-border bg-secondary/30">
+              <th className="py-3 px-6 text-left font-medium text-base">Country</th>
+              <th className="py-3 px-6 text-center font-medium text-base">Blocked</th>
             </tr>
           </thead>
           <tbody>
@@ -177,39 +128,20 @@ const BlockedCountriesTable = () => {
                 key={country.id}
                 className="border-b border-border hover:bg-secondary/50 transition-colors"
               >
-                <td className="py-3 px-4 text-sm font-medium">{country.name}</td>
-                {allProducts.map((product, idx) => (
-                  <td
-                    key={product}
-                    className={`py-3 px-3 text-center ${idx === 0 || idx === 3 ? "border-l border-border" : ""}`}
-                  >
-                    <button
-                      onClick={() => handleToggleRestriction(country.id, product)}
-                      className="p-1 rounded hover:bg-secondary transition-colors"
-                    >
-                      {country.restrictions[product] ? (
-                        <X className="w-5 h-5 text-destructive mx-auto" />
-                      ) : (
-                        <Check className="w-5 h-5 text-green-600 mx-auto" />
-                      )}
-                    </button>
-                  </td>
-                ))}
-                <td className="py-3 px-4 text-center border-l border-border">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDeleteCountry(country.id)}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                  >
-                    <Trash2 size={18} />
-                  </Button>
+                <td className="py-3 px-6 text-sm">{country.name}</td>
+                <td className="py-3 px-6 text-center">
+                  <div className="flex justify-center">
+                    <Switch
+                      checked={country.blocked}
+                      onCheckedChange={() => handleToggle(country.id)}
+                    />
+                  </div>
                 </td>
               </tr>
             ))}
             {blockedCountries.length === 0 && (
               <tr>
-                <td colSpan={8} className="py-8 text-center text-muted-foreground">
+                <td colSpan={2} className="py-8 text-center text-muted-foreground">
                   No countries added yet. Add countries using the dropdown above.
                 </td>
               </tr>
