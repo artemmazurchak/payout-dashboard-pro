@@ -1,6 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import PaymentMethodsTable from "@/components/PaymentMethodsTable";
+import BlockedCountriesTable from "@/components/BlockedCountriesTable";
 
 const Index = () => {
   return (
@@ -8,7 +8,7 @@ const Index = () => {
       <Sidebar />
       <main className="ml-16 p-8">
         <Header />
-        <PaymentMethodsTable />
+        <BlockedCountriesTable />
       </main>
     </div>
   );
