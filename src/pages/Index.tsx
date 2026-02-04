@@ -17,7 +17,7 @@ const Index = () => {
       <main className="ml-16 p-8">
         <Header />
         <div className="space-y-8">
-          <h1 className="text-3xl font-bold">Setting up products and countries</h1>
+          <h1 className="text-3xl font-bold">Configure Blocked Countries, Platform and Broker</h1>
           
           <BlockedCountriesTable />
           
