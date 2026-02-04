@@ -2,6 +2,7 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import BlockedCountriesTable from "@/components/BlockedCountriesTable";
 import TechnologyPlatformTable from "@/components/TechnologyPlatformTable";
+import TechnologyBrokerTable from "@/components/TechnologyBrokerTable";
 import { Button } from "@/components/ui/button";
 import { Save } from "lucide-react";
 
@@ -21,6 +22,8 @@ const Index = () => {
           <BlockedCountriesTable />
           
           <TechnologyPlatformTable />
+          
+          <TechnologyBrokerTable />
           
           <div className="flex justify-end">
             <Button

@@ -10,27 +10,30 @@ import {
 import { Plus, Trash2, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface PlatformStatus {
-  mt4: boolean;
-  mt5: boolean;
-  cTrader: boolean;
+interface BrokerStatus {
+  orbex: boolean;
+  gbe: boolean;
+  tickmill: boolean;
   dxfeed: boolean;
   rithmic: boolean;
   tradovate: boolean;
   stocks: boolean;
 }
 
-interface CountryPlatform {
+interface CountryBroker {
   id: string;
   name: string;
-  platforms: PlatformStatus;
+  brokers: BrokerStatus;
 }
 
 const allCountries = [
-  "Afghanistan",
-  "Belarus",
-  "Bonaire",
-  "Canada",
+  "Algeria",
+  "Argentina",
+  "Austria",
+  "Bahrain",
+  "Bolivia",
+  "Brazil",
+  "Chile",
   "Germany",
   "Spain",
   "Vietnam",
@@ -41,34 +44,41 @@ const allCountries = [
   "Japan",
   "Italy",
   "Australia",
-  "Brazil",
   "India",
   "Mexico",
   "South Korea",
-  "Russia",
-  "Netherlands",
 ];
 
-const initialCountryPlatforms: CountryPlatform[] = [
+const initialCountryBrokers: CountryBroker[] = [
   {
     id: "1",
-    name: "Afghanistan",
-    platforms: { mt4: true, mt5: true, cTrader: true, dxfeed: true, rithmic: false, tradovate: true, stocks: true },
+    name: "Algeria",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
   },
   {
     id: "2",
-    name: "Belarus",
-    platforms: { mt4: true, mt5: true, cTrader: true, dxfeed: false, rithmic: true, tradovate: true, stocks: true },
+    name: "Argentina",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
   },
   {
     id: "3",
-    name: "Bonaire",
-    platforms: { mt4: true, mt5: true, cTrader: true, dxfeed: true, rithmic: false, tradovate: true, stocks: false },
+    name: "Austria",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
   },
   {
     id: "4",
-    name: "Canada",
-    platforms: { mt4: false, mt5: false, cTrader: false, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
+    name: "Bahrain",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
+  },
+  {
+    id: "5",
+    name: "Bolivia",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
+  },
+  {
+    id: "6",
+    name: "Brazil",
+    brokers: { orbex: false, gbe: false, tickmill: true, dxfeed: true, rithmic: true, tradovate: true, stocks: true },
   },
 ];
 
@@ -91,47 +101,47 @@ const StatusToggle = ({ checked, onChange }: StatusToggleProps) => {
   );
 };
 
-const TechnologyPlatformTable = () => {
-  const [countryPlatforms, setCountryPlatforms] = useState<CountryPlatform[]>(initialCountryPlatforms);
+const TechnologyBrokerTable = () => {
+  const [countryBrokers, setCountryBrokers] = useState<CountryBroker[]>(initialCountryBrokers);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
 
   const availableCountries = allCountries.filter(
-    (country) => !countryPlatforms.some((cp) => cp.name === country)
+    (country) => !countryBrokers.some((cb) => cb.name === country)
   );
 
   const handleAddCountry = () => {
     if (selectedCountry) {
-      const newCountry: CountryPlatform = {
+      const newCountry: CountryBroker = {
         id: Date.now().toString(),
         name: selectedCountry,
-        platforms: {
-          mt4: true,
-          mt5: true,
-          cTrader: true,
+        brokers: {
+          orbex: true,
+          gbe: true,
+          tickmill: true,
           dxfeed: true,
           rithmic: true,
           tradovate: true,
           stocks: true,
         },
       };
-      setCountryPlatforms([...countryPlatforms, newCountry]);
+      setCountryBrokers([...countryBrokers, newCountry]);
       setSelectedCountry("");
     }
   };
 
   const handleDeleteCountry = (id: string) => {
-    setCountryPlatforms(countryPlatforms.filter((country) => country.id !== id));
+    setCountryBrokers(countryBrokers.filter((country) => country.id !== id));
   };
 
-  const handleTogglePlatform = (countryId: string, platform: keyof PlatformStatus) => {
-    setCountryPlatforms((countries) =>
+  const handleToggleBroker = (countryId: string, broker: keyof BrokerStatus) => {
+    setCountryBrokers((countries) =>
       countries.map((country) =>
         country.id === countryId
           ? {
               ...country,
-              platforms: {
-                ...country.platforms,
-                [platform]: !country.platforms[platform],
+              brokers: {
+                ...country.brokers,
+                [broker]: !country.brokers[broker],
               },
             }
           : country
@@ -142,9 +152,9 @@ const TechnologyPlatformTable = () => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Technology Platform</h2>
+        <h2 className="text-xl font-semibold">Technology Broker</h2>
         <p className="text-muted-foreground">
-          Manage platform availability for each country. Click on checkmarks or crosses to toggle status.
+          Manage broker availability for each country. Click on checkmarks or crosses to toggle status.
         </p>
       </div>
 
@@ -194,16 +204,16 @@ const TechnologyPlatformTable = () => {
               </th>
             </tr>
             <tr className="border-b border-border bg-secondary/30">
-              <th className="py-2 px-2 text-center font-medium text-sm border-l border-border">MT4</th>
-              <th className="py-2 px-2 text-center font-medium text-sm">MT5</th>
-              <th className="py-2 px-2 text-center font-medium text-sm">cTrader</th>
+              <th className="py-2 px-2 text-center font-medium text-sm border-l border-border">Orbex</th>
+              <th className="py-2 px-2 text-center font-medium text-sm">GBE</th>
+              <th className="py-2 px-2 text-center font-medium text-sm">Tickmill</th>
               <th className="py-2 px-2 text-center font-medium text-sm border-l border-border">dxfeed</th>
               <th className="py-2 px-2 text-center font-medium text-sm">rithmic</th>
               <th className="py-2 px-2 text-center font-medium text-sm">tradovate</th>
             </tr>
           </thead>
           <tbody>
-            {countryPlatforms.map((country) => (
+            {countryBrokers.map((country) => (
               <tr
                 key={country.id}
                 className="border-b border-border hover:bg-secondary/50 transition-colors"
@@ -212,56 +222,56 @@ const TechnologyPlatformTable = () => {
                 <td className="py-3 px-2 text-center border-l border-border">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.mt4}
-                      onChange={() => handleTogglePlatform(country.id, "mt4")}
+                      checked={country.brokers.orbex}
+                      onChange={() => handleToggleBroker(country.id, "orbex")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.mt5}
-                      onChange={() => handleTogglePlatform(country.id, "mt5")}
+                      checked={country.brokers.gbe}
+                      onChange={() => handleToggleBroker(country.id, "gbe")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.cTrader}
-                      onChange={() => handleTogglePlatform(country.id, "cTrader")}
+                      checked={country.brokers.tickmill}
+                      onChange={() => handleToggleBroker(country.id, "tickmill")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center border-l border-border">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.dxfeed}
-                      onChange={() => handleTogglePlatform(country.id, "dxfeed")}
+                      checked={country.brokers.dxfeed}
+                      onChange={() => handleToggleBroker(country.id, "dxfeed")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.rithmic}
-                      onChange={() => handleTogglePlatform(country.id, "rithmic")}
+                      checked={country.brokers.rithmic}
+                      onChange={() => handleToggleBroker(country.id, "rithmic")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.tradovate}
-                      onChange={() => handleTogglePlatform(country.id, "tradovate")}
+                      checked={country.brokers.tradovate}
+                      onChange={() => handleToggleBroker(country.id, "tradovate")}
                     />
                   </div>
                 </td>
                 <td className="py-3 px-2 text-center border-l border-border">
                   <div className="flex justify-center">
                     <StatusToggle
-                      checked={country.platforms.stocks}
-                      onChange={() => handleTogglePlatform(country.id, "stocks")}
+                      checked={country.brokers.stocks}
+                      onChange={() => handleToggleBroker(country.id, "stocks")}
                     />
                   </div>
                 </td>
@@ -277,7 +287,7 @@ const TechnologyPlatformTable = () => {
                 </td>
               </tr>
             ))}
-            {countryPlatforms.length === 0 && (
+            {countryBrokers.length === 0 && (
               <tr>
                 <td colSpan={9} className="py-8 text-center text-muted-foreground">
                   No countries added yet. Add countries using the dropdown above.
@@ -291,4 +301,4 @@ const TechnologyPlatformTable = () => {
   );
 };
 
-export default TechnologyPlatformTable;
+export default TechnologyBrokerTable;
