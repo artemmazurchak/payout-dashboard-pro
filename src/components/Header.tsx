@@ -12,7 +12,7 @@ const Header = () => {
         <span>/</span>
         <span>Config</span>
         <span>/</span>
-        <span className="text-foreground font-medium">PSP</span>
+        <span className="text-foreground font-medium">Tech. platform & broker</span>
       </nav>
     </header>
   );
